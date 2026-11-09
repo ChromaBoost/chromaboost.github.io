@@ -32,6 +32,8 @@ body {
 }
 a { color: var(--accent); }
 img, video, canvas { display: block; max-width: 100%; }
+/* "hidden" måste vinna över display: block ovan – annars ligger originalvideon över den färgade bilden. */
+[hidden] { display: none !important; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 .wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
 
