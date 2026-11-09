@@ -3,31 +3,176 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ChromaBoost</title>
-<style>
-  :root { color-scheme: dark; --accent: #53c8ff; --text: #ededef; --dim: #a3a3ad; }
-  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: radial-gradient(60% 50% at 50% 30%, #0b2533, #000); color: var(--text); font: 17px/1.6 "Segoe UI", system-ui, sans-serif; }
-  main { max-width: 640px; padding: 48px 20px; text-align: center; }
-  h1 { margin: 0; font-size: 56px; font-weight: 900; font-style: italic; color: var(--accent); }
-  .claw { font-size: 40px; font-weight: 900; color: var(--accent); letter-spacing: -4px; }
-  p { color: var(--dim); }
-  ul { text-align: left; display: inline-block; margin: 8px 0 24px; }
-  a { color: var(--accent); }
-</style>
+<title>ChromaBoost – See the game the way it should look</title>
+<meta name="description" content="ChromaBoost is a free Windows app for gamers: up to 300 % color saturation, game profiles, a custom crosshair, Dark Boost, zoom and sound – without touching the game.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="ChromaBoost">
+<meta property="og:description" content="Stronger, clearer colors in every game – without touching the game.">
+<meta property="og:image" content="https://chromaboost.github.io/media/clip2.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 18'%3E%3Cpath d='M1,17 L7,1 M7,17 L13,1 M13,17 L19,1' stroke='%2353c8ff' stroke-width='2.6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="preload" as="image" href="media/clip2.jpg">
 </head>
 <body>
-<main>
-  <div class="claw">///</div>
-  <h1>ChromaBoost</h1>
-  <p>A Windows app for gamers: stronger, clearer colors on your screen, without touching the game.</p>
-  <ul>
-    <li>Saturation up to 300 %, contrast, brightness, temperature and gamma</li>
-    <li>Presets per game, Dark Boost and zoom on a key</li>
-    <li>Your own crosshair, imported from CS2, VALORANT or Crosshair X</li>
-    <li>Sound: volume per app and an equalizer</li>
-    <li>Control it from your phone</li>
-  </ul>
-  <p><a href="privacy.html">Privacy policy</a></p>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="ChromaBoost">
+      <svg viewBox="0 0 20 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M1,17 L7,1" /><path d="M7,17 L13,1" /><path d="M13,17 L19,1" />
+      </svg>
+      <span>ChromaBoost</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#safe">Safety</a>
+      <a href="privacy.html">Privacy</a>
+      <a class="button" href="#download">Get ChromaBoost</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-head">
+        <h1 id="hero-title">
+          <span class="line"><span style="--i:0">See the game</span></span>
+          <span class="line"><span style="--i:1">the way it</span></span>
+          <span class="line"><span style="--i:2" class="glow">should look.</span></span>
+        </h1>
+        <div>
+          <p class="lead">ChromaBoost turns up the color on your whole screen – up to 300 % – so enemies, loot and footsteps in the grass stand out. The game itself is never touched.</p>
+          <div class="cta">
+            <a class="button" href="#download">Get ChromaBoost – free</a>
+            <a class="button ghost" href="#features">What it does</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Före/efter: samma video två gånger, vänster sida med ChromaBoosts mättnad (WebGL). -->
+      <div class="compare">
+        <div class="stage" id="stage" style="background-image:url(media/clip2.jpg)">
+          <div class="poster" id="poster" style="background-image:url(media/clip2.jpg)"></div>
+          <canvas id="canvas" aria-hidden="true"></canvas>
+          <video id="video" muted loop playsinline preload="auto" crossorigin="anonymous" aria-label="Gameplay clip" hidden></video>
+          <div class="fade"></div>
+          <span class="tag left">ChromaBoost · <b id="tagValue">220 %</b></span>
+          <span class="tag right">Original · 100 %</span>
+          <div class="divider" id="divider">
+            <button class="handle" id="handle" role="slider" aria-label="Compare: drag between ChromaBoost and original"
+                    aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6 3 12l6 6M15 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+          <span class="hint">Drag to compare</span>
+        </div>
+
+        <div class="controls">
+          <div class="clips" role="group" aria-label="Choose a clip" id="clips">
+            <button class="clip" data-clip="clip2" aria-pressed="true" style="background-image:url(media/clip2-thumb.jpg)"><span>Rust · Fields</span></button>
+            <button class="clip" data-clip="clip1" aria-pressed="false" style="background-image:url(media/clip1-thumb.jpg)"><span>Rust · Snow</span></button>
+            <button class="clip" data-clip="clip4" aria-pressed="false" style="background-image:url(media/clip4-thumb.jpg)"><span>CS2 · Town</span></button>
+            <button class="clip" data-clip="clip3" aria-pressed="false" style="background-image:url(media/clip3-thumb.jpg)"><span>CS2 · Yard</span></button>
+          </div>
+          <div class="strength">
+            <label for="strength">Saturation</label>
+            <output id="strengthValue" for="strength">220<small>%</small></output>
+            <div>
+              <input class="range" id="strength" type="range" min="0" max="300" step="5" value="220" aria-describedby="strengthMarks">
+              <div class="marks" id="strengthMarks"><span>0 %</span><span>100 % · original</span><span>200 %</span><span>300 %</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" aria-labelledby="features-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="features-title">Everything a gamer's screen needs.</h2>
+        <p>One small app in your tray. Set it once, and it switches by itself when your game has focus.</p>
+      </div>
+
+      <div class="features">
+        <article class="feature wide reveal">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3,4.5 H17 A1,1 0 0 1 18,5.5 V13 A1,1 0 0 1 17,14 H3 A1,1 0 0 1 2,13 V5.5 A1,1 0 0 1 3,4.5 Z M7.5,17 H12.5 M10,14 V17"/></svg>
+          <h3>Color like you mean it</h3>
+          <p>Saturation from 0 to 300 %, contrast, brightness, color temperature and gamma. Compare with the original at a click, and reset everything instantly with a shortcut.</p>
+          <div class="chips"><span>Up to 300 %</span><span>NVIDIA vibrance per screen</span><span>Ctrl+Alt+R reset</span></div>
+        </article>
+        <article class="feature wide reveal" style="--delay:.08s">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6,6.5 H14 A4,4 0 0 1 18,10.5 V11 A3.2,3.2 0 0 1 12.4,13.4 L11.4,12.5 H8.6 L7.6,13.4 A3.2,3.2 0 0 1 2,11 V10.5 A4,4 0 0 1 6,6.5 Z M6,8.6 V11.4 M4.6,10 H7.4 M13,9.2 L13.01,9.2 M14.8,10.8 L14.81,10.8"/></svg>
+          <h3>A profile for every game</h3>
+          <p>Rust gets its night preset, CS2 its competitive look – automatically, the moment the game has focus. Alt-tab out and your normal colors come back.</p>
+          <div class="chips"><span>Automatic switching</span><span>Share presets with a code</span></div>
+        </article>
+        <article class="feature reveal">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10,3.5 A6.5,6.5 0 1 1 9.99,3.5 Z M10,1 V6 M10,14 V19 M1,10 H6 M14,10 H19"/></svg>
+          <h3>Your crosshair, anywhere</h3>
+          <p>Build one or import it from CS2, VALORANT or Crosshair X. Pixel-exact, click-through, Ctrl+Alt+X to toggle.</p>
+        </article>
+        <article class="feature reveal" style="--delay:.06s">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5,12.6 A7,7 0 1 1 7.4,3.5 A5.6,5.6 0 0 0 16.5,12.6 Z"/></svg>
+          <h3>Dark Boost &amp; zoom</h3>
+          <p>Hold a key to lift dark corners, or to zoom in smoothly on the middle of the screen.</p>
+        </article>
+        <article class="feature reveal" style="--delay:.12s">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3,7.8 H6 L10.5,4.2 V15.8 L6,12.2 H3 Z M13.4,7.4 C14.7,8.8 14.7,11.2 13.4,12.6 M15.7,5.1 C18.1,7.6 18.1,12.4 15.7,14.9"/></svg>
+          <h3>Hear the footsteps</h3>
+          <p>Volume per app – lower Discord, raise the game – and an equalizer with a footsteps preset for any headset.</p>
+        </article>
+        <article class="feature wide reveal">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.8,1.8 H13.2 A1.8,1.8 0 0 1 15,3.6 V16.4 A1.8,1.8 0 0 1 13.2,18.2 H6.8 A1.8,1.8 0 0 1 5,16.4 V3.6 A1.8,1.8 0 0 1 6.8,1.8 Z M8.6,15.4 H11.4"/></svg>
+          <h3>Control it from your phone</h3>
+          <p>Scan a QR code and change colors from your phone while you play. It only works inside your own home network, and only while you allow it.</p>
+        </article>
+        <article class="feature wide reveal" style="--delay:.08s">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10,2.5 C5.6,2.5 2.5,5.9 2.5,10 C2.5,14.1 5.6,17.5 9.6,17.5 C11,17.5 11.6,16.6 11.1,15.5 C10.6,14.3 11.3,13.2 12.7,13.2 H14.4 C16.3,13.2 17.5,11.8 17.5,9.8 C17.5,5.8 14.2,2.5 10,2.5 Z M6.3,9.3 L6.31,9.3 M8.6,6.2 L8.61,6.2 M12.4,6.4 L12.41,6.4 M14.6,9.2 L14.61,9.2"/></svg>
+          <h3>Make it yours</h3>
+          <p>Pick the app's color and background – even an animated GIF behind the whole app. English and Swedish built in.</p>
+          <div class="chips"><span>7 themes</span><span>Custom color</span><span>Animated backgrounds</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust" id="safe" aria-labelledby="safe-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="safe-title">It never touches the game.</h2>
+        <p>ChromaBoost works on the finished picture, after the game has drawn it – like a color filter on your monitor.</p>
+      </div>
+      <div class="trust-grid">
+        <div class="reveal"><h3>No injection</h3><p>Nothing is loaded into the game. ChromaBoost uses Windows' own color tools and your graphics driver.</p></div>
+        <div class="reveal" style="--delay:.08s"><h3>Always one key away</h3><p><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd> puts every color back to normal, even in the middle of a match. A crash can't leave your screen colored.</p></div>
+        <div class="reveal" style="--delay:.16s"><h3>Your data stays home</h3><p>No servers, no tracking. Your sign-in, presets and settings stay on your PC. <a href="privacy.html">Privacy policy</a></p></div>
+      </div>
+      <p class="note reveal">Heads-up: a crosshair overlay or Dark Boost can count as an unfair advantage in some games, leagues and tournaments. They're off until you turn them on – check the rules first.</p>
+    </div>
+  </section>
+
+  <section class="download" id="download" aria-labelledby="download-title">
+    <div class="wrap reveal">
+      <h2 id="download-title">Turn the color up.</h2>
+      <p>Free for Windows 10 and 11. Sign in with Google and you're ready in a minute.</p>
+      <a class="button" id="downloadButton" href="#download" aria-disabled="true">Download for Windows – coming soon</a>
+      <div class="meta">Works best with games in borderless or windowed mode.</div>
+    </div>
+  </section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 ChromaBoost</span>
+    <span><a href="privacy.html">Privacy</a> · <a href="mailto:chromaboostapp@gmail.com">chromaboostapp@gmail.com</a></span>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
 </body>
 </html>
