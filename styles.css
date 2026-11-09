@@ -226,6 +226,8 @@ section { padding: 96px 0; }
 .download h2 span { color: var(--accent); text-shadow: 0 0 36px rgba(83, 200, 255, .55); }
 .download p { color: var(--dim); margin: 14px auto 26px; max-width: 46ch; }
 .download .meta { margin-top: 14px; color: var(--faint); font-size: 14px; }
+.download .warn { max-width: 56ch; margin: 22px auto 0; padding: 14px 18px; border-radius: var(--radius); border: 1px solid var(--line-2); background: var(--surface); color: var(--dim); font-size: 15px; }
+.download .warn b { color: var(--text); font-weight: 600; }
 
 footer { padding: 40px 0 56px; border-top: 1px solid var(--line); color: var(--faint); font-size: 14px; }
 footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }

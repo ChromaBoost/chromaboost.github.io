@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=3">
 <link rel="preload" as="image" href="media/clip2.jpg">
 </head>
 <body>
@@ -160,8 +160,13 @@
     <div class="wrap reveal">
       <h2 id="download-title">Turn the color up.</h2>
       <p>Free for Windows 10 and 11. Sign in with Google and you're ready in a minute.</p>
-      <a class="button" id="downloadButton" href="#download" aria-disabled="true">Download for Windows – coming soon</a>
-      <div class="meta">Works best with games in borderless or windowed mode.</div>
+      <a class="button" id="downloadButton" href="https://github.com/chromaboost/chromaboost.github.io/releases/latest/download/ChromaBoost-Setup.exe">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+        Download for Windows
+      </a>
+      <div class="meta">Version 0.6.0 · 62 MB · Windows 10 and 11 · Works best with games in borderless or windowed mode.</div>
+      <p class="warn">ChromaBoost is new and not code-signed yet, so Windows may say <b>"Windows protected your PC"</b>.
+        Click <b>More info</b> → <b>Run anyway</b>. On PCs with Smart App Control turned on, Windows blocks it completely for now.</p>
     </div>
   </section>
 </main>
@@ -173,6 +178,6 @@
   </div>
 </footer>
 
-<script src="app.js" defer></script>
+<script src="app.js?v=3" defer></script>
 </body>
 </html>
